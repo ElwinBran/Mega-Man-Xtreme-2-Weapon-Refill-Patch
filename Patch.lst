@@ -1,0 +1,21 @@
+LOC    OBJ              LINE   SOURCE
+                        1      ; Redirect the original code to the patch code
+014139 CD5B7D           2      ; CALL $7D5B
+----------
+                        3      ; Start of the patch code, firstly the Health energy offset is set to the max (at runtime this is 0x7D5B)
+017D6B EA21C1           4      ; LD $C121, A
+                               ; 0x1C is the maximum weapon energy value.
+017D6E 3E1C             5      ; LD A, #1C
+017D70 EA6DC0           ?      ; LD (C06D), A
+017D73 216EC0           ?      ; LD HL, #C06E
+017D76 3E40             ?      ; LD A, #40
+017D78 A6               ?      ; AND $(HL)
+017D79 2803             ?      ; JR Z, +#3
+017D7B 3E5C             ?      ; LD A, #5C
+017D7D 77               ??     ; LD $(HL), A
+017D7E 2C               ??     ; INC L
+017D7F 3E76             ??     ; LD A, #76
+017D81 BD               ??     ; CP L
+017D82 C2617D           ??     ; JP NZ, $7D61
+017D85 C9               ??     ; RET
+
