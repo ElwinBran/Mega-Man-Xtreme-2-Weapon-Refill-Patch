@@ -4,18 +4,25 @@ LOC    OBJ              LINE   SOURCE
 ----------
                         3      ; Start of the patch code, firstly the Health energy offset is set to the max (at runtime this is 0x7D5B)
 017D6B EA21C1           4      ; LD $C121, A
-                               ; 0x1C is the maximum weapon energy value.
+                               ; 0x1C is the maximum weapon energy value for Giga Crush.
 017D6E 3E1C             5      ; LD A, #1C
-017D70 EA6DC0           ?      ; LD (C06D), A
-017D73 216EC0           ?      ; LD HL, #C06E
-017D76 3E40             ?      ; LD A, #40
-017D78 A6               ?      ; AND $(HL)
-017D79 2803             ?      ; JR Z, +#3
-017D7B 3E5C             ?      ; LD A, #5C
-017D7D 77               ??     ; LD $(HL), A
-017D7E 2C               ??     ; INC L
-017D7F 3E76             ??     ; LD A, #76
-017D81 BD               ??     ; CP L
-017D82 C2617D           ??     ; JP NZ, $7D61
-017D85 C9               ??     ; RET
+                        6      ; Refill Giga Crush energy.
+017D70 EA6DC0           7      ; LD $(C06D), A
+                        8      ; Ready the refill loop by specifying the lowest normal weapon energy offset.
+017D73 216EC0           9      ; LD HL, #C06E
+                        10     ; This is the point where the weapon refill loop starts. First it is checked whether the weapon is obtained or not.
+017D76 3E40             11     ; LD A, #40
+017D78 A6               12     ; AND $(HL)
+                        13     ; Skip the refill if it is not obtained.
+017D79 2803             14     ; JR Z, +#3
+                        15     ; 0x5C is the max value for normal weapon energy.
+017D7B 3E5C             16     ; LD A, #5C
+017D7D 77               17     ; LD $(HL), A
+                        18     ; Increase loop counter and check if all offsets are iterated.
+017D7E 2C               19     ; INC L
+017D7F 3E76             20     ; LD A, #76
+017D81 BD               21     ; CP L
+                        22     ; Jump back to the loop start if not all offsets are iterated.
+017D82 C2617D           23     ; JP NZ, $7D61
+017D85 C9               24     ; RET
 
