@@ -8,7 +8,8 @@ In this README you will find further information on how this patch was made and 
 - [LunarIPS](https://www.romhacking.net/utilities/240/), to create a patch file.
 
 ## Process
-
+The process was actually much the same as the Xtreme 1 patch.
+Difference being a loop implemented and the Giga Crush weapon had it's own unique Maximum value.
 
 ## References
 In order to write the code a lot of knowledge was required. Here I list the sources specifically used for this project.
