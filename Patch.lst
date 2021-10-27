@@ -1,28 +1,28 @@
 LOC    OBJ              LINE   SOURCE
                         1      ; Redirect the original code to the patch code
-014139 CD5B7D           2      ; CALL $7D5B
+014139 CDE67F           2      ; CALL $7FE6
 ----------
-                        3      ; Start of the patch code, firstly the Health energy offset is set to the max (at runtime this is 0x7D5B)
-017D6B EA21C1           4      ; LD $C121, A
+                        3      ; Start of the patch code, firstly the Health energy offset is set to the max (at runtime this is 0x7FE6)
+017FE6 EA21C1           4      ; LD $C121, A
                                ; 0x1C is the maximum weapon energy value for Giga Crush.
-017D6E 3E1C             5      ; LD A, #1C
+017FE9 3E1C             5      ; LD A, #1C
                         6      ; Refill Giga Crush energy.
-017D70 EA6DC0           7      ; LD $(C06D), A
+017FEB EA6DC0           7      ; LD $(C06D), A
                         8      ; Ready the refill loop by specifying the lowest normal weapon energy offset.
-017D73 216EC0           9      ; LD HL, #C06E
+017FEE 216EC0           9      ; LD HL, #C06E
                         10     ; This is the point where the weapon refill loop starts. First it is checked whether the weapon is obtained or not.
-017D76 3E40             11     ; LD A, #40
-017D78 A6               12     ; AND $(HL)
-                        13     ; Skip the refill if it is not obtained.
-017D79 2803             14     ; JR Z, +#3
+017FF1 3E40             11     ; LD A, #40
+017FF3 A6               12     ; AND $(HL)
+                        13     ; Skip the refill if it is not obtained. (7D6E)
+017FF4 2803             14     ; JR Z, +#3
                         15     ; 0x5C is the max value for normal weapon energy.
-017D7B 3E5C             16     ; LD A, #5C
-017D7D 77               17     ; LD $(HL), A
+017FF6 3E5C             16     ; LD A, #5C
+017FF8 77               17     ; LD $(HL), A
                         18     ; Increase loop counter and check if all offsets are iterated.
-017D7E 2C               19     ; INC L
-017D7F 3E76             20     ; LD A, #76
-017D81 BD               21     ; CP L
-                        22     ; Jump back to the loop start if not all offsets are iterated.
-017D82 C2617D           23     ; JP NZ, $7D61
-017D85 C9               24     ; RET
+017FF9 2C               19     ; INC L
+017FFA 3E76             20     ; LD A, #76
+017FFC BD               21     ; CP L
+                        22     ; Jump back to the loop start if not all offsets are iterated. (7D66)
+017FFD 20F2             23     ; JR NZ, -#14
+017FFF C9               24     ; RET
 
